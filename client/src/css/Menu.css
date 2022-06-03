@@ -1,0 +1,47 @@
+.MainMenu {
+    color: var(--sec);
+    background: var(--qui);
+    border: 1em solid var(--pri);
+    border-radius: 1em;
+    outline: 2px solid var(--sec);
+    outline-offset: -1em;
+    width: 29.25em;
+    padding-top: 1em;
+    padding-bottom: 3em;
+    z-index: 10;
+}
+
+.Menu.Center {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.Menu h1 {
+    border-bottom: 2px solid var(--sec);
+    width: 75%;
+    margin: 0;
+    text-align: center;
+}
+
+.Menu .MenuLogo {
+    width: 50%;
+    margin: 2em 0 2em;
+}
+
+.Menu nav.Center {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    row-gap: 1em;
+}
+
+.Menu nav .Button {
+    cursor: pointer;
+    margin: 0;
+    font-size: 22px;
+}
+
+.Menu nav .Button:hover {
+    color: var(--ter);
+}
