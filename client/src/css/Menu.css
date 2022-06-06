@@ -1,13 +1,20 @@
 .MainMenu {
+    width: 29.25em;
+    padding-bottom: 3em;
+}
+
+.DateMenu {
+    width: 29.5em;
+}
+
+.Menu {
     color: var(--sec);
     background: var(--qui);
     border: 1em solid var(--pri);
     border-radius: 1em;
     outline: 2px solid var(--sec);
     outline-offset: -1em;
-    width: 29.25em;
-    padding-top: 1em;
-    padding-bottom: 3em;
+    padding: 1em;
     z-index: 10;
 }
 
@@ -15,6 +22,7 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    row-gap: 1em;
 }
 
 .Menu h1 {
@@ -29,19 +37,63 @@
     margin: 2em 0 2em;
 }
 
-.Menu nav.Center {
+.Menu nav, .Menu form {
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
     row-gap: 1em;
+    box-sizing: border-box;
+    width: 75%;
+}
+
+.Menu nav.Center, .Menu form.Center {
+    align-items: center;
 }
 
 .Menu nav .Button {
-    cursor: pointer;
     margin: 0;
     font-size: 22px;
 }
 
 .Menu nav .Button:hover {
     color: var(--ter);
+    cursor: pointer;
+}
+
+.Menu form .row{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 15em;
+}
+
+.Menu form .row.Space {
+    justify-content: space-between;
+}
+
+.Menu form label {
+    box-sizing: border-box;
+    width: 5em;
+}
+
+.Menu form select {
+    color: var(--sec);
+    background: var(--qua);
+    border: none;
+    box-sizing: border-box;
+    width: 10em;
+    font-size: 16px;
+}
+
+.Menu form input {
+    color: var(--sec);
+    background: var(--qua);
+    border: none;
+    width: 4em;
+    font-size: 16px;
+}
+
+.Menu form input[type=submit]:hover,
+.Menu form input[type=button]:hover,
+.Menu form input[type=reset]:hover{
+    color: var(--ter);
+    cursor: pointer;
 }

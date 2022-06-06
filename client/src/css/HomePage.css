@@ -1,43 +1,7 @@
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes fall {
-    0% {
-        transform: translateY(-150px);
-    }
-
-    100% {
-        transform: translateY(1000px);
-    }
-}
-
-:root{
-    background: var(--qua);
-}
-
 .HomePage {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.HomePage .Logo {
-    position: fixed;
-    top: 0;
-    z-index: -10;
-    transform-origin: center;
-}
-
-.HomePage .Logo img.Spin {
-    transform-origin: center;
-    animation: spin 3s linear infinite;
-}
-
-.HomePage .Logo.Fall {
-    animation: fall 4s linear infinite;
 }

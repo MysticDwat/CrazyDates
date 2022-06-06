@@ -3,7 +3,7 @@ import LogoSrc from '../files/crazy-dates.png';
 
 function Logo(){
     const [left, setLeft] = useState(Math.floor(Math.random() * 1820));
-    const [fallSpeed, setFallSpeed] = useState(Math.random() * 4.5 + 1.5);
+    const [fallSpeed, setFallSpeed] = useState(Math.floor(Math.random() * 4500) + 1500);
     const [spinSpeed, setSpinSpeed] = useState(Math.random() * 2 + 3);
     const [width, setWidth] = useState(Math.floor(Math.random() * 100) + 50)
 
@@ -12,13 +12,13 @@ function Logo(){
     }
 
     let fall = {
-        animation: `fall ${fallSpeed}s linear infinite`
+        animation: `fall ${fallSpeed / 1000}s linear infinite`
     }
 
     useEffect(() => {
         const interval = setInterval(() => {
             setLeft(Math.floor(Math.random() * 10000) / 100);
-        }, fallSpeed * 1000);
+        }, fallSpeed);
         return () => clearInterval(interval);
     });
 
