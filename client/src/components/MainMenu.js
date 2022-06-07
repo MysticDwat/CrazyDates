@@ -3,10 +3,7 @@ import '../css/Menu.css';
 import Logo from '../files/crazy-dates.png';
 
 function MainMenu() {
-    function render (status) {
-        return <h1>{status}</h1>;
-    }
-
+    //main menu links to other menus
     return (
         <div className="MainMenu Menu Center">
             <h1>Crazy Dates</h1>

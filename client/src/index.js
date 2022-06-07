@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import './index.css';
 import './css/Vars.css';
 import './css/Master.css';
 import './css/Menu.css';
@@ -17,6 +16,7 @@ root.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
+              {/*Site routes. Page is parent element that the menus render on top of.*/}
               <Route path='/' element={<Page />} >
                   <Route path='/' element={<MainMenu />} />
                   <Route path='date' element={<DateMenu />} />

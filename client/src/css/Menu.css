@@ -1,7 +1,4 @@
-.MainMenu {
-    padding-bottom: 3em;
-}
-
+/*defines default menu window*/
 .Menu {
     color: var(--sec);
     background: var(--qui);
@@ -14,6 +11,7 @@
     z-index: 10;
 }
 
+/*centers menu items*/
 .Menu.Center {
     display: flex;
     flex-flow: column nowrap;
@@ -21,6 +19,7 @@
     row-gap: 1em;
 }
 
+/*back button is a css triangle*/
 .Menu .BackBtn {
     --tri-size: 13px;
     display: flex;
@@ -37,11 +36,13 @@
     height: 0;
 }
 
+/*changes back button color on hover*/
 .Menu .BackBtn:hover {
     cursor: pointer;
     border-right: calc(var(--tri-size) * 2 * 0.866) solid var(--ter);
 }
 
+/*define menu title*/
 .Menu h1 {
     border-bottom: 2px solid var(--sec);
     width: 75%;
@@ -50,11 +51,13 @@
     position: relative;
 }
 
+/*defines menu logo*/
 .Menu .MenuLogo {
     width: 50%;
     margin: 2em 0 2em;
 }
 
+/*creates placeholder map*/
 .Menu .MapPlaceholder {
     background: var(--qua);
     box-sizing: border-box;
@@ -62,6 +65,7 @@
     height: 25em;
 }
 
+/*defines nav and form*/
 .Menu nav, .Menu form {
     display: flex;
     flex-flow: column nowrap;
@@ -70,25 +74,30 @@
     width: 75%;
 }
 
+/*centers nav and form elements*/
 .Menu nav.Center, .Menu form.Center {
     align-items: center;
 }
 
+/*defines nav button links*/
 .Menu nav .Button {
     text-decoration: none;
     margin: 0;
     font-size: 22px;
 }
 
+/*keeps visited buttons default color*/
 .Menu nav .Button:visited {
     color: var(--sec);
 }
 
+/*changes nav button color on hover*/
 .Menu nav .Button:hover {
     color: var(--ter);
     cursor: pointer;
 }
 
+/*defines a row in a form*/
 .Menu form .Row{
     display: flex;
     flex-flow: row nowrap;
@@ -97,28 +106,34 @@
     width: 30em;
 }
 
+/*centers row elements*/
 .Menu form .Row.Center {
     justify-content: center;
 }
 
+/*spaces row elements*/
 .Menu form .Row.Space {
     justify-content: space-between;
 }
 
+/*evenly spaces row elements*/
 .Menu form .Row.SpaceEven {
     justify-content: space-evenly;
 }
 
+/*defines default form label*/
 .Menu form label {
     box-sizing: border-box;
     width: 5em;
 }
 
+/*defines register form label*/
 .RegisterMenu form label {
     box-sizing: border-box;
     width: 8em;
 }
 
+/*defines form select*/
 .Menu form select {
     color: var(--sec);
     background: var(--qua);
@@ -128,6 +143,7 @@
     font-size: 16px;
 }
 
+/*defines form input*/
 .Menu form input {
     color: var(--sec);
     background: var(--qua);
@@ -136,6 +152,7 @@
     font-size: 16px;
 }
 
+/*defines form submit, button, and reset*/
 .Menu form input[type=submit]:hover,
 .Menu form input[type=button]:hover,
 .Menu form input[type=reset]:hover{
@@ -143,8 +160,14 @@
     cursor: pointer;
 }
 
+/*defines form text, password, and email*/
 .Menu form input[type=text],
 .Menu form input[type=password],
 .Menu form input[type=email] {
     width: 10em;
+}
+
+/*MainMenu needs bottom padding.*/
+.MainMenu {
+    padding-bottom: 3em;
 }

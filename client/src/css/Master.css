@@ -1,3 +1,4 @@
+/*defines spin and fall animations*/
 @keyframes spin {
     100% {
         transform: rotate(360deg);
@@ -14,10 +15,35 @@
     }
 }
 
+/*sets background color for all pages*/
 :root{
     background: var(--qua);
 }
 
+/*defines body and code fonts*/
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*hides element*/
+.hide {
+    display: none;
+}
+
+/*
+sets page dimensions and display
+centers menu on the screen
+*/
 .Page {
     width: 100%;
     height: 100vh;
@@ -26,6 +52,7 @@
     align-items: center;
 }
 
+/*defines static logo properties. animations defined in component*/
 .Logo {
     position: fixed;
     top: 0;
@@ -35,9 +62,4 @@
 
 .Logo img.Spin {
     transform-origin: center;
-    animation: spin 3s linear infinite;
-}
-
-.Logo.Fall {
-    animation: fall 4s linear infinite;
 }

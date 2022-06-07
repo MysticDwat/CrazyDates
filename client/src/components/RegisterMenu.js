@@ -1,16 +1,12 @@
-import {useNavigate} from "react-router-dom";
+import MenuTitle from "./MenuTitle";
 
 function RegisterMenu() {
-    const navigate = useNavigate();
-
     return(
         <div className="RegisterMenu Menu Center">
-            <h1>
-                Register
+            {/*Menu Title*/}
+            <MenuTitle title="Register" />
 
-                <div className="BackBtn" onClick={() => navigate(-1)}/>
-            </h1>
-
+            {/*Register Form*/}
             <form className="Center">
                 <div className="Row Center">
                     <label htmlFor="user">User Name</label>

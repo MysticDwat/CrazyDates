@@ -1,16 +1,12 @@
-import {useNavigate} from "react-router-dom";
+import MenuTitle from "./MenuTitle";
 
 function LoginMenu() {
-    const navigate = useNavigate();
-
     return(
         <div className="LoginMenu Menu Center">
-            <h1>
-                Login
+            {/*Menu Title*/}
+            <MenuTitle title="Login" />
 
-                <div className="BackBtn" onClick={() => navigate(-1)}/>
-            </h1>
-            
+            {/*Login Form*/}
             <form className="Center">
                 <div className="Row Center">
                     <label htmlFor="user">User Name</label>

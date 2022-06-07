@@ -1,13 +1,13 @@
 import {useRef} from "react";
-import {useNavigate} from "react-router-dom";
+import MenuTitle from "./MenuTitle";
 
 function DateMenu(){
-    const navigate = useNavigate();
-
+    //references to select elements
     const locationSelect = useRef();
     const eventSelect = useRef();
     const foodSelect = useRef();
 
+    //function to select random options from select elements use refs
     function selectRandom(){
         locationSelect.current.value = locationSelect.current.options[
         Math.floor(Math.random() * (locationSelect.current.options.length - 1)) + 1
@@ -22,14 +22,13 @@ function DateMenu(){
 
     return(
         <div className="DateMenu Menu Center">
-            <h1>
-                Date Finder
+            {/*Menu Title*/}
+            <MenuTitle title="Date Finder" />
 
-                <div className="BackBtn" onClick={() => navigate(-1)}/>
-            </h1>
-
+            {/*Date Options Form*/}
             <form className="DateResult Center">
                 <div className="Row Center">
+                    {/*Location Select*/}
                     <label htmlFor="location">Location</label>
                     <select name="location" id="location" ref={locationSelect} defaultValue="any">
                         <option value="any">Any</option>
@@ -49,6 +48,7 @@ function DateMenu(){
                 </div>
 
                 <div className="Row Center">
+                    {/*Event Select*/}
                     <label htmlFor="event">Event</label>
                     <select name="event" id="event" ref={eventSelect} defaultValue="any">
                         <option value="any">Any</option>
@@ -67,6 +67,7 @@ function DateMenu(){
                 </div>
 
                 <div className="Row Center">
+                    {/*Food Select*/}
                     <label htmlFor="food">Food</label>
                     <select name="food" id="food" ref={foodSelect} defaultValue="any">
                         <option value="any">Any</option>
@@ -87,12 +88,14 @@ function DateMenu(){
                 </div>
 
                 <div className="Row SpaceEven">
+                    {/*Submit, Random, and Reset Buttons*/}
                     <input type="submit" value="Submit"/>
                     <input type="button" value="Random" onClick={selectRandom}/>
                     <input type="reset" value="Reset"/>
                 </div>
             </form>
 
+            {/*Placeholder for future map*/}
             <div className="MapPlaceholder"></div>
         </div>
     );
