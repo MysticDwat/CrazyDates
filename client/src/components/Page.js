@@ -1,16 +1,14 @@
 import {useState} from 'react';
-import DateMenu from './DateMenu';
+import {Routes, Route, Outlet} from 'react-router-dom';
 import Logo from './Logo';
-import '../css/DatePage.css';
 
-function DatePage(){
+function Page(){
     const [logos, setLogos] = useState(Array(Math.floor(Math.random() * 20) + 10).fill().map(() => <Logo />));
     return(
-        <div className="DatePage">
-            <DateMenu />
-            {logos}
+        <div className="Page">
+            <Outlet />
         </div>
     );
 }
 
-export default DatePage;
+export default Page;

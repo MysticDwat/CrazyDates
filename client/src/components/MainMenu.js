@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import '../css/Menu.css';
 import Logo from '../files/crazy-dates.png';
 
@@ -13,9 +14,9 @@ function MainMenu() {
             <img className="MenuLogo" src={Logo} alt="Crazy Dates Logo"/>
 
             <nav className="Center">
-                <p className="Button">Play</p>
-                <p className="Button">Account</p>
-                <p className="Button">Settings</p>
+                <Link to="/date" className="Button">Play</Link>
+                <Link to="/login" className="Button">Account</Link>
+                <Link to="/settings" className="Button">Settings</Link>
             </nav>
         </div>
       );

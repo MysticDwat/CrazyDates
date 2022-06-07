@@ -1,6 +1,9 @@
 import {useRef} from "react";
+import {useNavigate} from "react-router-dom";
 
 function DateMenu(){
+    const navigate = useNavigate();
+
     const locationSelect = useRef();
     const eventSelect = useRef();
     const foodSelect = useRef();
@@ -19,13 +22,17 @@ function DateMenu(){
 
     return(
         <div className="DateMenu Menu Center">
-            <h1>Date Finder</h1>
+            <h1>
+                Date Finder
+
+                <div className="BackBtn" onClick={() => navigate(-1)}/>
+            </h1>
 
             <form className="DateResult Center">
-                <div className="row">
+                <div className="Row Center">
                     <label htmlFor="location">Location</label>
-                    <select name="location" id="location" ref={locationSelect} defaultValue="null">
-                        <option value="null"></option>
+                    <select name="location" id="location" ref={locationSelect} defaultValue="any">
+                        <option value="any">Any</option>
                         <option value="beach">Beach</option>
                         <option value="stpete">St.Pete</option>
                         <option value="yborcity">Ybor City</option>
@@ -41,10 +48,10 @@ function DateMenu(){
                     </select>
                 </div>
 
-                <div className="row">
+                <div className="Row Center">
                     <label htmlFor="event">Event</label>
-                    <select name="event" id="event" ref={eventSelect} defaultValue="null">
-                        <option value="null"></option>
+                    <select name="event" id="event" ref={eventSelect} defaultValue="any">
+                        <option value="any">Any</option>
                         <option value="picnic">Picnic</option>
                         <option value="comedy">Comedy</option>
                         <option value="movie">Movie</option>
@@ -59,10 +66,10 @@ function DateMenu(){
                     </select>
                 </div>
 
-                <div className="row">
+                <div className="Row Center">
                     <label htmlFor="food">Food</label>
-                    <select name="food" id="food" ref={foodSelect} defaultValue="null">
-                        <option value="null"></option>
+                    <select name="food" id="food" ref={foodSelect} defaultValue="any">
+                        <option value="any">Any</option>
                         <option value="beer">Beer</option>
                         <option value="latin">Latin</option>
                         <option value="mexican">Mexican</option>
@@ -79,7 +86,7 @@ function DateMenu(){
                     </select>
                 </div>
 
-                <div className="row Space">
+                <div className="Row SpaceEven">
                     <input type="submit" value="Submit"/>
                     <input type="button" value="Random" onClick={selectRandom}/>
                     <input type="reset" value="Reset"/>
