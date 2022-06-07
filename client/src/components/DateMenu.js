@@ -1,7 +1,13 @@
-import {useRef} from "react";
+import {useRef, useEffect, useState} from "react";
 import MenuTitle from "./MenuTitle";
 
 function DateMenu(){
+    //states to get select options
+    const [hasMounted, setHasMounted] = useState(false);
+    const [locationOptions, setLocationOptions] = useState([]);
+    const [eventOptions, setEventOptions] = useState([]);
+    const [foodOptions, setFoodOptions] = useState([]);
+
     //references to select elements
     const locationSelect = useRef();
     const eventSelect = useRef();
@@ -20,6 +26,64 @@ function DateMenu(){
             ].value;
     }
 
+    useEffect(() => {
+        //function to get date options
+        async function getOptions() {
+            //fetch to server api
+            await fetch('/api/date/options', {
+                method: "GET"
+            })
+                .then(async (res) => {
+                    //process body json
+                    let data = await res.json();
+
+                    //empty arrays to store option html
+                    let locations = [];
+                    let events = [];
+                    let foods = [];
+
+                    //generate location html
+                    for(let i in data.locations){
+                        let location = data.locations[i];
+                        let rawLocation = location.replace(' ', '').replace('.', '').toLowerCase();
+
+                        locations.push(<option value={rawLocation} key={rawLocation}>{location}</option>);
+                    }
+
+                    //generate event html
+                    for(let i in data.events){
+                        let event = data.events[i];
+                        let rawevent = event.replace(' ', '').replace('.', '').toLowerCase();
+
+                        events.push(<option value={rawevent} key={rawevent}>{event}</option>);
+                    }
+
+                    //generate food html
+                    for(let i in data.food){
+                        let food = data.food[i];
+                        let rawfood = food.replace(' ', '').replace('.', '').toLowerCase();
+
+                        foods.push(<option value={rawfood} key={rawfood}>{food}</option>);
+                    }
+
+                    //store html arrays in state
+                    setLocationOptions(locations);
+                    setEventOptions(events);
+                    setFoodOptions(foods);
+                })
+                .catch((err) => console.log(err));
+        }
+
+        //set hasMounted to true to indicate element has mounted.
+        setHasMounted(true);
+
+        //if hasMounted was true before, get options.
+        //this set up guarantees fetch will only be called once.
+        if(hasMounted){
+            getOptions().catch((err) => console.log(err));
+        }
+    }, [hasMounted]);
+
     return(
         <div className="DateMenu Menu Center">
             {/*Menu Title*/}
@@ -32,18 +96,7 @@ function DateMenu(){
                     <label htmlFor="location">Location</label>
                     <select name="location" id="location" ref={locationSelect} defaultValue="any">
                         <option value="any">Any</option>
-                        <option value="beach">Beach</option>
-                        <option value="stpete">St.Pete</option>
-                        <option value="yborcity">Ybor City</option>
-                        <option value="sarasota">Sarasota</option>
-                        <option value="tampa">Tampa</option>
-                        <option value="lakeland">Lakeland</option>
-                        <option value="bradenton">Bradenton</option>
-                        <option value="soho">SoHo</option>
-                        <option value="brandon">Brandon</option>
-                        <option value="clearwater">Clearwater</option>
-                        <option value="plantcity">Plant City</option>
-                        <option value="hillscounty">Hills County</option>
+                        {locationOptions}
                     </select>
                 </div>
 
@@ -52,17 +105,7 @@ function DateMenu(){
                     <label htmlFor="event">Event</label>
                     <select name="event" id="event" ref={eventSelect} defaultValue="any">
                         <option value="any">Any</option>
-                        <option value="picnic">Picnic</option>
-                        <option value="comedy">Comedy</option>
-                        <option value="movie">Movie</option>
-                        <option value="museum">Museum</option>
-                        <option value="play">Play</option>
-                        <option value="music">Music</option>
-                        <option value="art">Art</option>
-                        <option value="historytour">History Tour</option>
-                        <option value="roadtrip">Road Trip</option>
-                        <option value="scavengerhunt">Scavenger Hunt</option>
-                        <option value="dayhike">Day Hike</option>
+                        {eventOptions}
                     </select>
                 </div>
 
@@ -71,19 +114,7 @@ function DateMenu(){
                     <label htmlFor="food">Food</label>
                     <select name="food" id="food" ref={foodSelect} defaultValue="any">
                         <option value="any">Any</option>
-                        <option value="beer">Beer</option>
-                        <option value="latin">Latin</option>
-                        <option value="mexican">Mexican</option>
-                        <option value="african">African</option>
-                        <option value="european">European</option>
-                        <option value="american">American</option>
-                        <option value="asian">Asian</option>
-                        <option value="indian">Indian</option>
-                        <option value="foodtruck">Food Truck</option>
-                        <option value="middleeasten">Middle Eastern</option>
-                        <option value="bistro">Bistro</option>
-                        <option value="seafood">Seafood</option>
-                        <option value="foreign">Foreign</option>
+                        {foodOptions}
                     </select>
                 </div>
 

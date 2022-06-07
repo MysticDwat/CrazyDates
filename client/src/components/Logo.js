@@ -1,12 +1,12 @@
-import {useRef, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import LogoSrc from '../files/crazy-dates.png';
 
 function Logo(){
     //logo options for animation
     const [left, setLeft] = useState(Math.floor(Math.random() * 1820));
-    const [fallSpeed, setFallSpeed] = useState(Math.floor(Math.random() * 4500) + 1500);
-    const [spinSpeed, setSpinSpeed] = useState(Math.random() * 2 + 3);
-    const [width, setWidth] = useState(Math.floor(Math.random() * 100) + 50)
+    const [fallSpeed] = useState(Math.floor(Math.random() * 4500) + 1500);
+    const [spinSpeed] = useState(Math.random() * 2 + 3);
+    const [width] = useState(Math.floor(Math.random() * 100) + 50)
 
     //defines spin animation for logo
     let spin = {
