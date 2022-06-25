@@ -21,7 +21,7 @@ root.render(
                   <Route path='/' element={<MainMenu />} />
                   <Route path='date' element={<DateMenu />} />
                   <Route path='login' element={<LoginMenu />} />
-                  <Route path='register' elemetn={<RegisterMenu />} />
+                  <Route path='register' element={<RegisterMenu />} />
                   <Route path='*' element={<p style={{fontSize: '32px'}}>404 ERROR: Page not found.</p>} />
               </Route>
           </Routes>

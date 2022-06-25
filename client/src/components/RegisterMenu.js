@@ -1,16 +1,23 @@
+import {useState} from 'react';
 import MenuTitle from "./MenuTitle";
 
 function RegisterMenu() {
+    const [user, setUser] = useState('');
+
+    async function sendRegistration() {
+
+    }
+
     return(
         <div className="RegisterMenu Menu Center">
             {/*Menu Title*/}
             <MenuTitle title="Register" />
 
             {/*Register Form*/}
-            <form className="Center">
+            <form className="Center" onSubmit={sendRegistration}>
                 <div className="Row Center">
                     <label htmlFor="user">User Name</label>
-                    <input type="text" name="user" id="user" />
+                    <input type="text" name="user" id="user" value={user} onChange={(e) => setUser(e.target.value)}/>
                 </div>
 
                 <div className="Row Center">

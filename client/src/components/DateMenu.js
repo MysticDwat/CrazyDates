@@ -71,6 +71,7 @@ function DateMenu(){
                     setEventOptions(events);
                     setFoodOptions(foods);
                 })
+                //catch any error
                 .catch((err) => console.log(err));
         }
 

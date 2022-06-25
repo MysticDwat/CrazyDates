@@ -81,6 +81,7 @@
 
 /*defines nav button links*/
 .Menu nav .Button {
+    color: var(--sec);
     text-decoration: none;
     margin: 0;
     font-size: 22px;
