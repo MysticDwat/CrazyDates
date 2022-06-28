@@ -1,12 +1,20 @@
 import {useRef, useEffect, useState} from "react";
+import {Marker} from '@react-google-maps/api';
+import categories from "../jsons/categories.json"
 import MenuTitle from "./MenuTitle";
+import DateMap from "./DateMap";
 
 function DateMenu(){
     //states to get select options
     const [hasMounted, setHasMounted] = useState(false);
-    const [locationOptions, setLocationOptions] = useState([]);
-    const [eventOptions, setEventOptions] = useState([]);
-    const [foodOptions, setFoodOptions] = useState([]);
+    const [locationOptions, setLocationOptions] = useState(categories.locations);
+    const [eventOptions, setEventOptions] = useState(categories.events);
+    const [foodOptions, setFoodOptions] = useState(categories.food);
+
+    //map states
+    const [map, setMap] = useState(null);
+    const [center, setCenter] = useState({lat: 27.850582, lng: -82.210923});
+    const [markers, setMarkers] = useState([]);
 
     //references to select elements
     const locationSelect = useRef();
@@ -26,62 +34,72 @@ function DateMenu(){
             ].value;
     }
 
-    useEffect(() => {
-        //function to get date options
-        async function getOptions() {
-            //fetch to server api
-            await fetch('/api/date/options', {
-                method: "GET"
-            })
-                .then(async (res) => {
-                    //process body json
-                    let data = await res.json();
+    const getMarkers = (query) => {
+        let service = new window.google.maps.places.PlacesService(map);
 
-                    //empty arrays to store option html
-                    let locations = [];
-                    let events = [];
-                    let foods = [];
-
-                    //generate location html
-                    for(let i in data.locations){
-                        let location = data.locations[i];
-                        let rawLocation = location.replace(' ', '').replace('.', '').toLowerCase();
-
-                        locations.push(<option value={rawLocation} key={rawLocation}>{location}</option>);
-                    }
-
-                    //generate event html
-                    for(let i in data.events){
-                        let event = data.events[i];
-                        let rawevent = event.replace(' ', '').replace('.', '').toLowerCase();
-
-                        events.push(<option value={rawevent} key={rawevent}>{event}</option>);
-                    }
-
-                    //generate food html
-                    for(let i in data.food){
-                        let food = data.food[i];
-                        let rawfood = food.replace(' ', '').replace('.', '').toLowerCase();
-
-                        foods.push(<option value={rawfood} key={rawfood}>{food}</option>);
-                    }
-
-                    //store html arrays in state
-                    setLocationOptions(locations);
-                    setEventOptions(events);
-                    setFoodOptions(foods);
-                })
-                //catch any error
-                .catch((err) => console.log(err));
+        let request = {
+            location: new window.google.maps.LatLng(center.lat, center.lng),
+            radius: '500',
+            query: query
         }
 
+        service.textSearch(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                let markers = [];
+
+                for (let i = 0; i < results.length; i++) {
+                    let place = results[i];
+                    let lat = place.geometry.location.lat();
+                    let lng = place.geometry.location.lng();
+
+                    markers.push(<Marker position={{lat: lat, lng: lng}} key={place.place_id}/>);
+                }
+
+                setMarkers(markers);
+            }
+        });
+    }
+
+    useEffect(() => {
         //set hasMounted to true to indicate element has mounted.
         setHasMounted(true);
 
         //if hasMounted was true before, get options.
         //this set up guarantees fetch will only be called once.
         if(hasMounted){
-            getOptions().catch((err) => console.log(err));
+            //empty arrays to store option html
+            let locations = [];
+            let events = [];
+            let foods = [];
+
+            //generate location html
+            for(let i in categories.locations){
+                let location = categories.locations[i];
+                let rawLocation = location.replace(' ', '').replace('.', '').toLowerCase();
+
+                locations.push(<option value={rawLocation} key={rawLocation}>{location}</option>);
+            }
+
+            //generate event html
+            for(let i in categories.events){
+                let event = categories.events[i];
+                let rawevent = event.replace(' ', '').replace('.', '').toLowerCase();
+
+                events.push(<option value={rawevent} key={rawevent}>{event}</option>);
+            }
+
+            //generate food html
+            for(let i in categories.food){
+                let food = categories.food[i];
+                let rawfood = food.replace(' ', '').replace('.', '').toLowerCase();
+
+                foods.push(<option value={rawfood} key={rawfood}>{food}</option>);
+            }
+
+            //store html arrays in state
+            setLocationOptions(locations);
+            setEventOptions(events);
+            setFoodOptions(foods);
         }
     }, [hasMounted]);
 
@@ -121,14 +139,24 @@ function DateMenu(){
 
                 <div className="Row SpaceEven">
                     {/*Submit, Random, and Reset Buttons*/}
-                    <input type="submit" value="Submit"/>
+                    <input type="button" value="Submit" onClick={() => {
+                        if(foodSelect.current.value !== 'Any'){
+                            getMarkers(foodSelect.current.value);
+                        }
+                    }}/>
                     <input type="button" value="Random" onClick={selectRandom}/>
                     <input type="reset" value="Reset"/>
                 </div>
             </form>
 
-            {/*Placeholder for future map*/}
-            <div className="MapPlaceholder"></div>
+            {/*Date Map*/}
+            <DateMap
+                map={map}
+                center={center}
+                markers={markers}
+                setMap={setMap}
+                setCenter={setCenter}
+            />
         </div>
     );
 }

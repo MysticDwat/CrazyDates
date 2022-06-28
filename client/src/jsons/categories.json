@@ -1,0 +1,44 @@
+{
+  "locations": [
+    "Beach",
+    "St.Pete",
+    "Ybor City",
+    "Sarasota",
+    "Tampa",
+    "Lakeland",
+    "Bradenton",
+    "SoHo",
+    "Brandon",
+    "Clearwater",
+    "Plant City",
+    "Hills County"
+  ],
+  "events": [
+    "Picnic",
+    "Comedy",
+    "Movie",
+    "Museum",
+    "Play",
+    "Music",
+    "Art",
+    "History Tour",
+    "Road Trip",
+    "Scavenger Hunt",
+    "Day Hike"
+  ],
+  "food": [
+    "Beer",
+    "Latin",
+    "Mexican",
+    "African",
+    "European",
+    "American",
+    "Asian",
+    "Indian",
+    "Food Truck",
+    "Middle Eastern",
+    "Bistro",
+    "Seafood",
+    "Foreign"
+  ]
+}
