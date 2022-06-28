@@ -19,20 +19,23 @@ function DateMap(props) {
 
     const [hasCenter, setHasCenter] = useState(false);
 
+    const setMap = props.setMap;
+    const setCenter = props.setCenter;
+
     const onLoad = useCallback((map) => {
         map.setZoom(15);
-        props.setMap(map);
-    },[]);
+        setMap(map);
+    },[setMap]);
 
     useEffect(() => {
         setHasCenter(true);
 
         if(hasCenter){
             navigator.geolocation.getCurrentPosition((pos) => {
-                props.setCenter({lat: pos.coords.latitude, lng: pos.coords.longitude});
+                setCenter({lat: pos.coords.latitude, lng: pos.coords.longitude});
             })
         }
-    },[hasCenter]);
+    },[hasCenter,setCenter]);
 
     return isLoaded ? (
         <div id="DateMap">
@@ -41,8 +44,10 @@ function DateMap(props) {
                 center={props.center}
                 zoom={15}
                 onLoad={onLoad}
+                onClick={() => props.setInfoWindow(null)}
             >
                 {props.markers}
+                {props.infoWindow}
             </GoogleMap>
         </div>
     ) : <></>
