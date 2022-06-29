@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.78b00fe2.css",
+    "main.js": "/static/js/main.ba8e3396.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/crazy-dates.png": "/static/media/crazy-dates.46da4143968fe88d4416.png",
+    "index.html": "/index.html",
+    "main.78b00fe2.css.map": "/static/css/main.78b00fe2.css.map",
+    "main.ba8e3396.js.map": "/static/js/main.ba8e3396.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.78b00fe2.css",
+    "static/js/main.ba8e3396.js"
+  ]
+}
