@@ -7,26 +7,20 @@ import './css/Menu.css';
 import Page from './components/Page';
 import MainMenu from './components/MainMenu';
 import DateMenu from './components/DateMenu';
-import LoginMenu from './components/LoginMenu';
-import RegisterMenu from './components/RegisterMenu';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <BrowserRouter>
-          <Routes>
-              {/*Site routes. Page is parent element that the menus render on top of.*/}
-              <Route path='/' element={<Page />} >
-                  <Route path='/' element={<MainMenu />} />
-                  <Route path='date' element={<DateMenu />} />
-                  <Route path='login' element={<LoginMenu />} />
-                  <Route path='register' element={<RegisterMenu />} />
-                  <Route path='*' element={<p style={{fontSize: '32px'}}>404 ERROR: Page not found.</p>} />
-              </Route>
-          </Routes>
-      </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+      <Routes>
+          {/*Site routes. Page is parent element that the menus render on top of.*/}
+          <Route path='/' element={<Page />} >
+              <Route path='/' element={<MainMenu />} />
+              <Route path='date' element={<DateMenu />} />
+              <Route path='*' element={<p style={{fontSize: '32px'}}>404 ERROR: Page not found.</p>} />
+          </Route>
+      </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

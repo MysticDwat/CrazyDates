@@ -30,6 +30,11 @@ code {
     display: none;
 }
 
+/*centers text*/
+.Center {
+    text-align: center;
+}
+
 /*
 sets page dimensions and display
 centers menu on the screen
@@ -51,4 +56,14 @@ centers menu on the screen
 
 .Logo img.Spin {
     transform-origin: center;
+}
+
+.InfoWindow * {
+    margin: 0;
+    color: var(--pri);
+}
+
+.InfoWindow .Name {
+    font-weight: bold;
+    color: var(--sec);
 }

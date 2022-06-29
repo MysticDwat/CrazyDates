@@ -1,33 +1,49 @@
 import {useEffect, useState} from 'react';
 import LogoSrc from '../files/crazy-dates.png';
 
+//vars to control width range
+const maxWidth = 150;
+const minWidth = 40;
+
 function Logo(){
     //logo options for animation
     const [left, setLeft] = useState(Math.floor(Math.random() * 100));
-    const [top, setTop] = useState(-10);
-    const [fallSpeed] = useState(Math.floor(Math.random() * 350) + 150);
-    const [spinSpeed] = useState(Math.random() * 2 + 3);
-    const [width] = useState(Math.floor(Math.random() * 100) + 50)
+    const [top, setTop] = useState(Math.floor(Math.random() * 100 * 120) - 10);
+    const [rotation, setRotation] = useState(Math.floor(Math.random() * 359));
+    const [fallSpeed] = useState(Math.floor(Math.random() * 350) + 350);
+    const [spinSpeed] = useState(Math.random() * 2000 + 3000);
+    const [width] = useState(Math.floor(Math.random() * (maxWidth - minWidth)) + minWidth)
 
-    //defines spin animation for logo
-    let spin = {
-        animation: `spin ${spinSpeed}s linear infinite`
-    }
-
-    //every time the fall animation ends, set new x coordinate
     useEffect(() => {
         const interval = setInterval(() => {
-            setTop(top < 110 ? top + (fallSpeed / 1000) : -10);
+            //moves logo down until it reaches 110vh, then reset back to -10
+            setTop(top < 110 ? top + (fallSpeed / 1000 * ((.4 * (width / 100) - 1) + 1)) : -10);
+            //every time the logo rests vertically, set new left coordinate
             setLeft(top < 110 ? left : Math.floor(Math.random() * 100));
+            //spins logo
+            setRotation((rotation + (3600 / spinSpeed)) % 360);
         }, 10);
         return () => clearInterval(interval);
     });
 
-    //apply fall and left coordinate to parent div and spin and width to child div
-    //if applied to same div, logo spins incorrectly
+    //apply top, left, and z coordinates to parent div and width, rotation, and filter to child divy
     return(
-        <div className="Logo Fall" style={{top: `${top}vh`, left: `calc(${left}vw - ${width / 2}px)`}}>
-            <img className="Spin" src={LogoSrc} alt="Crazy Dates Logo" style={{...spin, width: `${width}px`}}/>
+        <div
+            className="Logo Fall"
+            style={{
+                top: `${top}vh`,
+                left: `calc(${left}vw - ${width / 2}px)`,
+                zIndex: (width - maxWidth + 5)}}
+        >
+            <img
+                className="Spin"
+                src={LogoSrc}
+                alt="Crazy Dates Logo"
+                style={{
+                    width: `${width}px`,
+                    transform: `rotate(${rotation}deg)`,
+                    filter: `saturate(${70 + (30 * (width / maxWidth))}%) brightness(${100 + (15 * minWidth / width)}%)`
+            }}/>
         </div>
     );
 }

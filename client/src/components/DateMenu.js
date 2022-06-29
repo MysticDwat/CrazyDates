@@ -1,11 +1,12 @@
 import {useRef, useEffect, useState} from "react";
 import {Marker, InfoWindow} from '@react-google-maps/api';
-import categories from "../jsons/categories.json"
+import categories from "../jsons/categories.json";
+import scavengerCards from "../jsons/scavengerHuntItems.json";
 import MenuTitle from "./MenuTitle";
 import DateMap from "./DateMap";
 
+//the event's query to be loaded into place search
 const eventQueries = {
-    any : {query : ""},
     picnic : {query : "", type: "park"},
     comedy : {query : "comedy"},
     movie : {query : "", type : "movie_theater"},
@@ -17,11 +18,18 @@ const eventQueries = {
     dayhike : {query : "", type : "park"}
 }
 
+//defines special rules for certain events
+const specialRules = {
+    "roadtrip" : "Drive for 1 hour. Roll a die for every intersection: 1-2 > Left. 3-4> Straight. 5-6 > Right. Stop at all scenic sites.",
+    "scavengerhunt" : "Find and take a selfie with"
+}
+
 function DateMenu(){
-    //states to get select options
+    //date form states
     const [hasMounted, setHasMounted] = useState(false);
     const [eventOptions, setEventOptions] = useState(categories.events);
     const [foodOptions, setFoodOptions] = useState(categories.food);
+    const [specialRule, setSpecialRule] = useState(null);
 
     //map states
     const [map, setMap] = useState(null);
@@ -44,53 +52,26 @@ function DateMenu(){
             ].value;
     }
 
-    const getFoodMarkers = () => {
-        let service = new window.google.maps.places.PlacesService(map);
-
-        let request = {
-            location: new window.google.maps.LatLng(center.lat, center.lng),
-            radius: '500',
-            query: foodSelect.current.value !== "any" ? foodSelect.current.selectedOptions[0].innerText : "",
-            type: "restaurant"
-        }
-
-        service.textSearch(request, (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                let markers = [];
-
-                for (let i = 0; i < results.length; i++) {
-                    let place = results[i];
-                    let lat = place.geometry.location.lat();
-                    let lng = place.geometry.location.lng();
-
-                    markers.push(
-                        <Marker
-                            position={{lat: lat, lng: lng}}
-                            key={place.place_id}
-                            icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
-                            onClick={() => handleInfoWindow(place)}
-                        />
-                    );
-                }
-
-                setFoodMarkers(markers);
-            }
-        });
-    }
-
+    //function to get the markers for all searched event places
     const getEventMarkers = () => {
+        //create places api service
         let service = new window.google.maps.places.PlacesService(map);
 
+        //generate request
+        //get query from eventQueries
         let request = {
             ...eventQueries[eventSelect.current.value],
             location: new window.google.maps.LatLng(center.lat, center.lng),
             radius: '500'
         }
 
+        //do text search of nearby places
         service.textSearch(request, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                //empty array for markers
                 let markers = [];
 
+                //for each result, create marker
                 for (let i = 0; i < results.length; i++) {
                     let place = results[i];
                     let lat = place.geometry.location.lat();
@@ -99,31 +80,107 @@ function DateMenu(){
                     markers.push(
                         <Marker
                             position={{lat: lat, lng: lng}}
-                            key={place.place_id}
+                            key={"food" + place.place_id}
                             icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
                             onClick={() => handleInfoWindow(place)}
                         />
                     );
                 }
 
+                //save markers
                 setEventMarkers(markers);
             }
         });
     }
 
+    //function to get the markers for all searched food places
+    const getFoodMarkers = () => {
+        //create places api service
+        let service = new window.google.maps.places.PlacesService(map);
+
+        //generate request
+        let request = {
+            location: new window.google.maps.LatLng(center.lat, center.lng),
+            radius: '500',
+            query: foodSelect.current.selectedOptions[0].innerText,
+            type: "restaurant"
+        }
+
+        //do text search of nearby places
+        service.textSearch(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                //empty array for markers
+                let markers = [];
+
+                //for each result, create marker
+                for (let i = 0; i < results.length; i++) {
+                    let place = results[i];
+                    let lat = place.geometry.location.lat();
+                    let lng = place.geometry.location.lng();
+
+                    markers.push(
+                        <Marker
+                            position={{lat: lat, lng: lng}}
+                            key={"event" + place.place_id}
+                            icon={"http://maps.google.com/mapfiles/ms/icons/red-dot.png"}
+                            onClick={() => handleInfoWindow(place)}
+                        />
+                    );
+                }
+
+                //save markers
+                setFoodMarkers(markers);
+            }
+        });
+    }
+
+    //function to load info window of selected markers
     const handleInfoWindow = (place) => {
+        //create info window if marker selected, else return null
         setInfoWindow(place !== null ? (
             <InfoWindow
                 position={{lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}}
                 onCloseClick={() => setInfoWindow(null)}
             >
-                <div>
-                    <p>{place.name}</p>
+                <div className="InfoWindow">
+                    <p className="Name">{place.name}</p>
                     <p>Rating: {place.rating}/5</p>
                     <p>{place.formatted_address}</p>
                 </div>
             </InfoWindow>
             ) : null);
+    }
+
+    //function to handle special rules
+    const handleSpecialRules = () => {
+        //get event and rules
+        let event = eventSelect.current.selectedOptions[0].innerText;
+        let rules = specialRules[eventSelect.current.value];
+
+        //if scavenger hunt, generate items to take pics with
+        if(event === "Scavenger Hunt"){
+            let indexes = [];
+
+            //generates 4 unique indices
+            while(indexes.length < 4){
+                let index = Math.floor(Math.random() * scavengerCards.length);
+                if(indexes.indexOf(index) === -1) indexes.push(index);
+            }
+
+            while(indexes.length > 1){
+                rules = `${rules} a ${scavengerCards[indexes.pop()]}, `;
+            }
+
+            rules = `${rules} and a ${scavengerCards[indexes.pop()]}.`;
+        }
+
+        //load special rule
+        setSpecialRule(
+            <div className="SpecialRules">
+                <p className="Center">Special Rules: {event}</p>
+                <p className="Center">{rules}</p>
+            </div>
+        );
     }
 
     useEffect(() => {
@@ -169,8 +226,7 @@ function DateMenu(){
                 <div className="Row Center">
                     {/*Event Select*/}
                     <label htmlFor="event">Event</label>
-                    <select name="event" id="event" ref={eventSelect} defaultValue="any">
-                        <option value="any">Any</option>
+                    <select name="event" id="event" ref={eventSelect}>
                         {eventOptions}
                     </select>
                 </div>
@@ -178,8 +234,7 @@ function DateMenu(){
                 <div className="Row Center">
                     {/*Food Select*/}
                     <label htmlFor="food">Food</label>
-                    <select name="food" id="food" ref={foodSelect} defaultValue="any">
-                        <option value="any">Any</option>
+                    <select name="food" id="food" ref={foodSelect}>
                         {foodOptions}
                     </select>
                 </div>
@@ -187,7 +242,13 @@ function DateMenu(){
                 <div className="Row SpaceEven">
                     {/*Submit, Random, and Reset Buttons*/}
                     <input type="button" value="Submit" onClick={() => {
-                        getEventMarkers();
+                        if(!Object.keys(specialRules).includes(eventSelect.current.value)){
+                            getEventMarkers();
+                            setSpecialRule(null);
+                        } else{
+                            setEventMarkers([]);
+                            handleSpecialRules();
+                        }
                         getFoodMarkers();
                     }}/>
                     <input type="button" value="Random" onClick={() => {
@@ -197,11 +258,14 @@ function DateMenu(){
                 </div>
             </form>
 
+            {/*Special rules for certain events.*/}
+            {specialRule}
+
             {/*Date Map*/}
             <DateMap
                 map={map}
                 center={center}
-                markers={[...eventMarkers, ...foodMarkers]}
+                markers={[...new Set([...eventMarkers, ...foodMarkers])]}
                 infoWindow={infoWindow}
                 setMap={setMap}
                 setCenter={setCenter}

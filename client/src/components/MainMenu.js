@@ -11,7 +11,6 @@ function MainMenu() {
 
             <nav className="Center">
                 <Link to="/date" className="Button">Play</Link>
-                <Link to="/settings" className="Button">Settings</Link>
             </nav>
         </div>
       );
