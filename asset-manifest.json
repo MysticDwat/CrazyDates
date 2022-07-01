@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/CrazyDates/static/css/main.78b00fe2.css",
-    "main.js": "/CrazyDates/static/js/main.9a9ce8f8.js",
+    "main.js": "/CrazyDates/static/js/main.15421b1b.js",
     "static/js/787.c4e7f8f9.chunk.js": "/CrazyDates/static/js/787.c4e7f8f9.chunk.js",
     "static/media/crazy-dates.png": "/CrazyDates/static/media/crazy-dates.46da4143968fe88d4416.png",
     "index.html": "/CrazyDates/index.html",
     "main.78b00fe2.css.map": "/CrazyDates/static/css/main.78b00fe2.css.map",
-    "main.9a9ce8f8.js.map": "/CrazyDates/static/js/main.9a9ce8f8.js.map",
+    "main.15421b1b.js.map": "/CrazyDates/static/js/main.15421b1b.js.map",
     "787.c4e7f8f9.chunk.js.map": "/CrazyDates/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.78b00fe2.css",
-    "static/js/main.9a9ce8f8.js"
+    "static/js/main.15421b1b.js"
   ]
 }
