@@ -8,7 +8,7 @@ const minWidth = 40;
 function Logo(){
     //logo options for animation
     const [left, setLeft] = useState(Math.floor(Math.random() * 100));
-    const [top, setTop] = useState(Math.floor(Math.random() * 100 * 120) - 10);
+    const [top, setTop] = useState(Math.floor(Math.random() * 120) - 10);
     const [rotation, setRotation] = useState(Math.floor(Math.random() * 359));
     const [fallSpeed] = useState(Math.floor(Math.random() * 350) + 350);
     const [spinSpeed] = useState(Math.random() * 2000 + 3000);
